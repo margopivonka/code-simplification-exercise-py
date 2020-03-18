@@ -2,6 +2,30 @@
 from datetime import datetime
 import os
 
+
+#goal 1: simplify USD formatting
+#goal 2: simplify receipt printing / file writing
+
+
+
+
+
+
+
+
+
+def to_usd(my_price):
+    return f"${my_price:,.2f}"
+
+
+
+
+
+
+
+
+
+
 checkout_at = datetime.now().strftime("%M/%d/%Y %I:%m %p")
 
 selected_products = [
@@ -22,7 +46,7 @@ print("---------")
 print("CHECKOUT AT: " + str(now.strftime("%Y-%M-%d %H:%m:%S")))
 print("---------")
 for p in selected_products:
-    print("SELECTED PRODUCT: " + p["name"] + "   " + '${:.0f}'.format(p["price"]))
+    print("SELECTED PRODUCT: " + p["name"] + "   " + to_usd(p["price"]))
 print("---------")
 print(f"SUBTOTAL: {subtotal:,.2f}")
 print(f"TAX: {(subtotal * 0.0875):.2f}")
@@ -37,10 +61,10 @@ file_name = os.path.join(os.path.dirname(__file__), "..", "receipts", f"{now.str
 with open(file_name, 'w') as f:
     f.write("------------------------------------------")
     for p in selected_products:
-        f.write("\nSELECTED PRODUCT: " + p["name"] + "   " + '${:.0f}'.format(p["price"]))
+        f.write("\nSELECTED PRODUCT: " + p["name"] + "   " + to_usd(p["price"]))
 
     f.write("---------")
-    f.write(f"SUBTOTAL: {subtotal:,.2f}")
+    f.write(f"SUBTOTAL: {to_usd(subtotal)}")
     f.write(f"TAX: {(subtotal * 0.1):.2f}")
     f.write(f"TOTAL: {((subtotal * 0.1) + subtotal):.2f}")
     f.write("---------")
